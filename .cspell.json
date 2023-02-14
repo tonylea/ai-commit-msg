@@ -19,5 +19,11 @@
     "package-lock.json"
   ],
   "ignoreWords": [],
-  "words": []
+  "words": [
+    "aicommits",
+    "inversify",
+    "kleur",
+    "liftr",
+    "tscov"
+  ]
 }
