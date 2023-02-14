@@ -1,0 +1,23 @@
+{
+  "version": "0.2",
+  "allowCompoundWords": true,
+  "language": "en-GB",
+  "dictionaries": [
+    "en-GB",
+    "companies"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    ".gitignore",
+    "**/.devcontainer/**",
+    "**/.git/**",
+    "**/.husky/**",
+    "**/.vscode/**",
+    "**/CHANGELOG.md",
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "package-lock.json"
+  ],
+  "ignoreWords": [],
+  "words": []
+}
