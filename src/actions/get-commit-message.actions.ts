@@ -1,5 +1,4 @@
 import { showError } from "../utils/logger.util";
-import { normaliseCommitDescription } from "./normalise-commit-description.action";
 import { execSync } from "child_process";
 import { Configuration, OpenAIApi } from "openai";
 
@@ -24,9 +23,13 @@ async function generateCommitMessage(
       n: 1,
     });
 
+    const regex = /\.$/i;
+
     let openAiMessage: string = completion.data.choices[0]
       .text!.trim()
-      .replace(/[\n\r]/g, "");
+      .replace(/[\n\r]/g, "")
+      .toLowerCase()
+      .replace(regex, "");
     return openAiMessage;
   } catch (error) {
     const errorAsAny = error as any;
@@ -75,8 +78,7 @@ export async function getCommitMessage(): Promise<String> {
 
   const prompt = `I want you to act like a git commit message writer. I will input a git diff and your job is to convert it into a useful commit message. Do not preface the commit with anything, use the present tense, return a complete sentence, do not repeat yourself and limit the message to 90 characters including spaces: ${diff}`;
 
-  let aiCommitMessage: String;
-  aiCommitMessage = await generateCommitMessage(OPENAI_KEY, prompt);
+  let aiCommitMessage: String = await generateCommitMessage(OPENAI_KEY, prompt);
 
-  return normaliseCommitDescription(aiCommitMessage);
+  return aiCommitMessage;
 }
