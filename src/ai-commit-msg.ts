@@ -19,6 +19,7 @@ import { getCommitMessage } from "./actions/get-commit-message.actions";
 import { copyCommitHeaderToClipboard } from "./actions/copy-commit-header-to-clipboard.actions";
 import { green } from "kleur";
 import { ConsoleMessage } from "./models/console-message";
+import { formatMessage } from "./utils/formatter.utils";
 
 const clear = require("clear");
 
@@ -66,8 +67,7 @@ export async function AiCommitMsg(): Promise<any> {
   let commitBody: string = "";
   if (addBodyAnswer.addBody === true) {
     const commitBodyAnswer: Answer = await commitBodyQuestion();
-    commitBody = commitBodyAnswer.commitBody;
-    // TODO: Combine everything to one line, then split on end of last word before 100 characters
+    commitBody = formatMessage(commitBodyAnswer.commitBody);
   }
 
   let commitFooter: string = "";
@@ -75,8 +75,10 @@ export async function AiCommitMsg(): Promise<any> {
     await includesBreakingChangeQuestion();
   if (includesBreakingChangeAnswer.breakingChange === true) {
     const commitFooterAnswer: Answer = await commitFooterQuestion();
-    commitFooter = `BREAKING CHANGE: ${commitFooterAnswer.commitFooter}`;
-    // TODO: Combine everything to one line, then split on end of last word before 100 characters
+    // commitFooter = `BREAKING CHANGE: ${commitFooterAnswer.commitFooter}`;
+    commitFooter = formatMessage(
+      `BREAKING CHANGE: ${commitFooterAnswer.commitFooter}`
+    );
   }
 
   // Commit
@@ -84,8 +86,4 @@ export async function AiCommitMsg(): Promise<any> {
   if (commitChangesAnswer.commitChanges === true) {
     commitChanges(commitHeader, commitBody, commitFooter);
   }
-
-  console.log(
-    `COMMIT-MSG::::: ${commitType}${commitScope}: ${commitDescription}`
-  );
 }
