@@ -23,11 +23,11 @@ export async function AiCommitMsg(): Promise<any> {
   showTitleAndBanner();
 
   const typeAnswer: Answer = await typeQuestion();
-  const commitType: String = typeAnswer.type;
+  const commitType: string = typeAnswer.type;
 
   const addScopeAnswer: Answer = await addScopeQuestion();
 
-  let commitScope: String;
+  let commitScope: string;
   if (addScopeAnswer.addScope === true) {
     const scopeAnswer: Answer = await scopeQuestion();
     commitScope = ` (${scopeAnswer.scope})`;

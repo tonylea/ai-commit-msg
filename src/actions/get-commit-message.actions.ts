@@ -24,7 +24,7 @@ async function generateCommitMessage(
       n: 1,
     });
 
-    let openAiMessage: String = completion.data.choices[0]
+    let openAiMessage: string = completion.data.choices[0]
       .text!.trim()
       .replace(/[\n\r]/g, "");
     return openAiMessage;
