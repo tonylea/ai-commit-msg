@@ -9,6 +9,7 @@ import {
 import { Answer } from "./models/choice";
 import { noCommitsStaged } from "./utils/checker.utils";
 import { stageAllCommits } from "./actions/stage-all-commits.actions";
+import { getCommitMessage } from "./actions/get-commit-message.actions";
 
 const clear = require("clear");
 
@@ -18,16 +19,16 @@ export async function AiCommitMsg(): Promise<any> {
   showTitleAndBanner();
 
   const typeAnswer: Answer = await typeQuestion();
-  const type: String = typeAnswer.type;
+  const commitType: String = typeAnswer.type;
 
   const addScopeAnswer: Answer = await addScopeQuestion();
 
-  let scope: String;
+  let commitScope: String;
   if (addScopeAnswer.addScope === true) {
     const scopeAnswer: Answer = await scopeQuestion();
-    scope = ` (${scopeAnswer.scope})`;
+    commitScope = ` (${scopeAnswer.scope})`;
   } else {
-    scope = "";
+    commitScope = "";
   }
 
   const changesStagedAnswer: Answer = await changesStagedQuestion();
@@ -41,5 +42,9 @@ export async function AiCommitMsg(): Promise<any> {
     }
   }
 
-  console.log(`COMMIT-MSG::::: ${type}${scope}: `);
+  const commitDescription: String = await getCommitMessage();
+
+  console.log(
+    `COMMIT-MSG::::: ${commitType}${commitScope}: ${commitDescription}`
+  );
 }
