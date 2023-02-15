@@ -2,9 +2,10 @@
   "name": "ai-commit-msg",
   "version": "1.0.0",
   "description": "Automatically generate a convention commit message using OpenAI",
-  "main": "./lib/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "bin": {
-    "ai-commit-msg": "./bin/ai-commit-msg"
+    "ai-commit-msg": "bin/ai-commit-msg"
   },
   "scripts": {
     "clean:all": "rm -rf ./node_modules ./package-lock.json ./lib ./docs",
@@ -41,6 +42,7 @@
   "homepage": "https://github.com/tonylea/ai-commit-msg#readme",
   "dependencies": {
     "@types/fs-extra": "^11.0.1",
+    "ai-commit-msg": "^1.0.0",
     "clear": "^0.1.0",
     "copy-to-clipboard": "^3.3.3",
     "figlet": "^1.5.2",
