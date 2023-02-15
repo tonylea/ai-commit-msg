@@ -6,6 +6,10 @@ import {
   changesStagedQuestion,
   stageAllChangesQuestion,
   copyAndQuitQuestion,
+  addBodyQuestion,
+  commitBodyQuestion,
+  includesBreakingChangeQuestion,
+  commitFooterQuestion,
 } from "./questions";
 import { Answer } from "./models/choice";
 import { noCommitsStaged } from "./utils/checker.utils";
@@ -51,15 +55,28 @@ export async function AiCommitMsg(): Promise<any> {
   const commitHeader: string = `${commitType}${commitScope}: ${commitDescription}`;
   console.info(green(ConsoleMessage.GENERATED_HEADER) + commitHeader);
 
-  // Copy and quit?,
-
   const copyAndQuitAnswer: Answer = await copyAndQuitQuestion();
   if (copyAndQuitAnswer.copyAndQuit === true) {
     copyCommitHeaderToClipboard(commitHeader);
     process.exit(0);
   }
-  // Add Body?
-  // Vreaking Change?
+  const addBodyAnswer: Answer = await addBodyQuestion();
+  let commitBody: string;
+  if (addBodyAnswer.addBody === true) {
+    const commitBodyAnswer: Answer = await commitBodyQuestion();
+    commitBody = commitBodyAnswer.commitBody;
+    // TODO: Combine everything to one line, then split on end of last word before 100 characters
+  }
+
+  let commitFooter: string;
+  const includesBreakingChangeAnswer: Answer =
+    await includesBreakingChangeQuestion();
+  if (includesBreakingChangeAnswer.breakingChange === true) {
+    const commitFooterAnswer: Answer = await commitFooterQuestion();
+    commitFooter = `BREAKING CHANGE: ${commitFooterAnswer.commitFooter}`;
+    // TODO: Combine everything to one line, then split on end of last word before 100 characters
+  }
+
   // Commit
 
   console.log(

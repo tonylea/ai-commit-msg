@@ -4,3 +4,7 @@ export * from "./scope.question";
 export * from "./changes-staged.question";
 export * from "./stage-all-changes.question";
 export * from "./copy-and-quit.question";
+export * from "./add-body.question";
+export * from "./commit-body.question";
+export * from "./includes-breaking-change.question";
+export * from "./commit-footer.question";

@@ -5,6 +5,10 @@ export interface Answer {
   changesStaged?: boolean;
   stageAllChanges?: boolean;
   copyAndQuit?: boolean;
+  addBody?: boolean;
+  commitBody: string;
+  breakingChange?: boolean;
+  commitFooter: string;
 }
 
 export interface Choice {
