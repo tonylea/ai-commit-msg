@@ -2,6 +2,8 @@ export interface Answer {
   type: CommitType;
   addScope?: boolean;
   scope: string;
+  changesStaged?: boolean;
+  stageAllChanges?: boolean;
 }
 
 export interface Choice {
