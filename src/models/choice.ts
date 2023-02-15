@@ -9,6 +9,7 @@ export interface Answer {
   commitBody: string;
   breakingChange?: boolean;
   commitFooter: string;
+  commitChanges: boolean;
 }
 
 export interface Choice {

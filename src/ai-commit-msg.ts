@@ -10,10 +10,11 @@ import {
   commitBodyQuestion,
   includesBreakingChangeQuestion,
   commitFooterQuestion,
+  commitChangesQuestion,
 } from "./questions";
 import { Answer } from "./models/choice";
 import { noCommitsStaged } from "./utils/checker.utils";
-import { stageAllCommits } from "./actions/stage-all-commits.actions";
+import { stageAllCommits, commitChanges } from "./actions/git.actions";
 import { getCommitMessage } from "./actions/get-commit-message.actions";
 import { copyCommitHeaderToClipboard } from "./actions/copy-commit-header-to-clipboard.actions";
 import { green } from "kleur";
@@ -31,7 +32,7 @@ export async function AiCommitMsg(): Promise<any> {
 
   const addScopeAnswer: Answer = await addScopeQuestion();
 
-  let commitScope: string;
+  let commitScope: string = "";
   if (addScopeAnswer.addScope === true) {
     const scopeAnswer: Answer = await scopeQuestion();
     commitScope = ` (${scopeAnswer.scope})`;
@@ -61,14 +62,15 @@ export async function AiCommitMsg(): Promise<any> {
     process.exit(0);
   }
   const addBodyAnswer: Answer = await addBodyQuestion();
-  let commitBody: string;
+
+  let commitBody: string = "";
   if (addBodyAnswer.addBody === true) {
     const commitBodyAnswer: Answer = await commitBodyQuestion();
     commitBody = commitBodyAnswer.commitBody;
     // TODO: Combine everything to one line, then split on end of last word before 100 characters
   }
 
-  let commitFooter: string;
+  let commitFooter: string = "";
   const includesBreakingChangeAnswer: Answer =
     await includesBreakingChangeQuestion();
   if (includesBreakingChangeAnswer.breakingChange === true) {
@@ -78,6 +80,10 @@ export async function AiCommitMsg(): Promise<any> {
   }
 
   // Commit
+  const commitChangesAnswer: Answer = await commitChangesQuestion();
+  if (commitChangesAnswer.commitChanges === true) {
+    commitChanges(commitHeader, commitBody, commitFooter);
+  }
 
   console.log(
     `COMMIT-MSG::::: ${commitType}${commitScope}: ${commitDescription}`

@@ -8,3 +8,4 @@ export * from "./add-body.question";
 export * from "./commit-body.question";
 export * from "./includes-breaking-change.question";
 export * from "./commit-footer.question";
+export * from "./commit-changes.question";
