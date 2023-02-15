@@ -26,6 +26,7 @@
     "kleur",
     "liftr",
     "OPENAI",
+    "pbcopy",
     "tscov"
   ]
 }

@@ -4,6 +4,7 @@ export interface Answer {
   scope: string;
   changesStaged?: boolean;
   stageAllChanges?: boolean;
+  copyAndQuit?: boolean;
 }
 
 export interface Choice {
