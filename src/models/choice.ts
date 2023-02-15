@@ -19,6 +19,5 @@ export enum CommitType {
   FIX = "fix",
   PERF = "perf",
   REFACTOR = "refactor",
-  STYLE = "style",
   TEST = "test",
 }
