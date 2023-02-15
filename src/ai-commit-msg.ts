@@ -1,5 +1,5 @@
 import { showTitleAndBanner } from "./utils/logger.util";
-import { typeQuestion } from "./questions";
+import { typeQuestion, addScopeQuestion, scopeQuestion } from "./questions";
 import { Answer } from "./models/choice";
 
 const clear = require("clear");
@@ -12,5 +12,15 @@ export async function AiCommitMsg(): Promise<any> {
   const typeAnswer: Answer = await typeQuestion();
   const type: String = typeAnswer.type;
 
-  console.log(`COMMIT-MSG::::: ${type}`);
+  const addScopeAnswer: Answer = await addScopeQuestion();
+
+  let scope: String;
+  if (addScopeAnswer.addScope === true) {
+    const scopeAnswer: Answer = await scopeQuestion();
+    scope = ` (${scopeAnswer.scope})`;
+  } else {
+    scope = "";
+  }
+
+  console.log(`COMMIT-MSG::::: ${type}${scope}: `);
 }

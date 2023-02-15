@@ -1,5 +1,7 @@
 export interface Answer {
   type: CommitType;
+  addScope?: boolean;
+  scope: string;
 }
 
 export interface Choice {
